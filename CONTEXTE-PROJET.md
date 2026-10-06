@@ -2,7 +2,7 @@
 
 > Document de référence chargé automatiquement dans les sessions OpenCode ouvertes dans ce dossier.
 > 📖 **Guide du code** : `GUIDE-CODE.md` explique en détail tout le code (MVC, fichiers, SQL, sécurité, parcours).
-> Dernière mise à jour : 06/10/2026 (refonte **POO + MVC** + thème vert écolo + **tableau de bord par profil** + **« se souvenir de moi »**).
+> Dernière mise à jour : 06/10/2026 (refonte **POO + MVC** + thème vert écolo + **tableau de bord par profil** + **« se souvenir de moi »** + **dépôt Git** + nettoyage du code mort).
 
 ## Organisation des fichiers (refonte MVC le 23/09/2026)
 
@@ -32,7 +32,7 @@ Routeur centralisé : **chaque page = une route** `index.php?route=...` gérée 
 | Route | Page |
 |---|---|
 | `accueil` | liste publique des services |
-| `connexion`, `inscription`, `deconnexion`, `motDePasseOublie`, `reinitialiserMotDePasse` (token), `creerMotSecret` | authentification |
+| `connexion`, `inscription`, `deconnexion`, `motDePasseOublie` (récupération **par mot secret**), `creerMotSecret`, `deconnexion` | authentification |
 | `cgu` | CGU + RGPD |
 | `profil` | données perso, devenir réparateur, entreprise (lat/lng pour la carte), changement mot secret |
 | `service&id=` | fiche publique d'un service (avis validés affichés) |
@@ -88,7 +88,7 @@ l'accès PDO passe par `Database::get()` (aucun `$pdo` global).
 
 ## Modèle de données (script `fairepair_bdd.sql` — à jour)
 
-Spécialisation exclusive : `utilisateur` (id, prenom, nom, adresse NULL, code_postal NULL, ville NULL, email UNIQUE, telephone NULL, mot_de_passe hashé, **mot_secret hashé**, date_creation, reset_token, reset_expires_at, **tentatives_connexion**, **blocage_jusqua**, **tentatives_secret**, **blocage_secret_jusqua**, **cgu_acceptee_at**, **cgu_version**) → tables `client`, `reparateur`, `moderateur` (PK = FK vers `utilisateur.id`, ON DELETE CASCADE). **Un compte peut être client ET réparateur (double rôle)**.
+Spécialisation exclusive : `utilisateur` (id, prenom, nom, adresse NULL, code_postal NULL, ville NULL, email UNIQUE, telephone NULL, mot_de_passe hashé, **mot_secret hashé**, date_creation, **tentatives_connexion**, **blocage_jusqua**, **tentatives_secret**, **blocage_secret_jusqua**, **cgu_acceptee_at**, **cgu_version**) → tables `client`, `reparateur`, `moderateur` (PK = FK vers `utilisateur.id`, ON DELETE CASCADE). **Un compte peut être client ET réparateur (double rôle)**.
 
 | Table | Clés étrangères / contraintes clés |
 |---|---|
@@ -104,7 +104,7 @@ Spécialisation exclusive : `utilisateur` (id, prenom, nom, adresse NULL, code_p
 - L'inscription crée toujours un compte **client** ; l'adresse/la ville/le téléphone sont complétés au profil.
 - **Passage client → réparateur** depuis le profil (action `devenir_reparateur`, `nom_entreprise`, `siret`, `description_pro`) : la ligne `client` est conservée (double rôle possible).
 - Multi-rôles : `Auth::roles()` / helpers `rolesUtilisateur()`, `estClient()`, `estReparateur()`, `estModerateur()` ; menu adaptatif du header selon les rôles.
-- **Récupération du mot de passe par mot secret** (route `motDePasseOublie`) : message d'erreur générique (anti-énumération). Lien token conservé en parallèle (`reinitialiserMotDePasse`).
+- **Récupération du mot de passe par mot secret** (route `motDePasseOublie`) : message d'erreur générique (anti-énumération). Le flux « lien par token email » a été **supprimé le 06/10** (rien ne créait de token : code mort).
 - **Mot secret OBLIGATOIRE après l'inscription** : l'inscription connecte et redirige vers `creerMotSecret` ; tant que `mot_secret` est NULL, le header redirige toutes les routes (sauf `creerMotSecret` et `deconnexion`). Testé.
 - **Changement du mot secret sécurisé** (profil, action `mot_secret`) : l'**ancien** mot secret est obligatoire (`password_verify`), puis nouveau + confirmation. Testé : mauvais ancien → refus ; bon ancien → changement effectif.
 - **Blocage après 5 échecs de connexion** : `tentatives_connexion` + `blocage_jusqua` ; après 5 échecs, blocage 15 min puis remise à zéro ; connexion réussie = reset du compteur.
@@ -118,7 +118,7 @@ Spécialisation exclusive : `utilisateur` (id, prenom, nom, adresse NULL, code_p
 **✅ Fait**
 - Cahier des charges complet (`Cahier_des_charges_Fairepair.docx` + `Fairepair.pdf`) : sections fonctionnelles 2.1 client, 2.2 réparateur, 2.3 modérateur ; MCD + MLD + MPD.
 - Use case : `usecase_fairepair.drawio` (3 acteurs).
-- Base de données : `fairepair_bdd.sql` complet (reset_token/reset_expires_at, mot_secret, blocage, cgu_acceptee_at/cgu_version, colonnes reparateur).
+- Base de données : `fairepair_bdd.sql` complet (mot_secret, compteurs de blocage, cgu_acceptee_at/cgu_version, colonnes reparateur latitude/longitude, table `auth_remember`).
 - **Refonte POO + MVC (23/09/2026) — testée de bout en bout :**
   - Routeur `?route=...` (27 routes → 11 contrôleurs), autoloader `App\`, singleton `Database`, `Auth` (session/rôles/gardes), helpers `e`/`url`/`setFlash`/`validerMotDePasse`/`gererUpload` repris.
   - 6 modèles encapsulant tout le SQL (Utilisateur avec blocage 5 tentatives + politique mdp + mot secret + trace CGU ; Service ; Reservation ; Paiement ; Avis ; Signalement).
@@ -137,6 +137,9 @@ Spécialisation exclusive : `utilisateur` (id, prenom, nom, adresse NULL, code_p
 - **Mot de passe : politique en UNE regex** (`validerMotDePasse`) + messages détaillés (tests unitaires OK).
 - **Mot secret : 3 tentatives max → blocage 15 min** (`tentatives_secret`, `blocage_secret_jusqua`), appliqué au changement (profil) et à la récupération du mdp. Testé : 4ᵉ essai refusé avec « Réessayez après 16:30 », récupération bloque, mdp non modifié, compteurs reset.
 - **Nettoyage soutenance** : `base-de-donnees/nettoyage_soutenance.sql` (supprime `*@test.fr` par cascade FK) ; les scripts `creer_test_*.php` ont été retirés.
+- **Nettoyage du code mort (06/10)** : suppression de `Auth::requireRoleActif()` (jamais appelée), du **flux « reset par token »** (route `reinitialiserMotDePasse`, vue associée, `Utilisateur::trouverParToken()` / `majMotDePasseParToken()`, colonnes `reset_token` / `reset_expires_at` — rien ne créait de token, la récupération se fait par mot secret) et de 7 classes `.badge-*` non utilisées. Audit automatisé : **79 fonctions/méthodes, 0 morte ; 0 classe CSS orpheline**.
+- ⚠️ **Bug corrigé le 06/10** : la réécriture du header avait supprimé le `<main class="container">` → les pages publiques n'étaient plus centrées. Le header ouvre désormais `main.container` pour le layout `header` (et `footer.php` le referme) ; le layout `sidebar` garde son propre `.dashboard`.
+- **Dépôt Git (06/10)** : le projet est versionné (`git init -b main`, 1ᵉʳ commit « Fair'repair : application web complète »). `.gitignore` à la racine (fichiers système, photos envoyées par les réparateurs dans `code/public/assets/uploads/`, logs). **Faire un commit après chaque journée de travail** : `git add -A` puis `git commit -m "message"` — c'est cet historique que le jury regarde.
 - **Thème « vert écolo » + logo (25/09)** : `style.css` entièrement refait (dégradés verts, cartes arrondies, ombres, hover, responsive) ; **logo vélo SVG** inline dans le header + **favicon** (`assets/img/favicon.svg`) ; section **hero** sur l'accueil avec photo `hero-accueil.jpg` + 3 points éco ; section « engagement » avec `velo-reparation.jpg` (atelier) et `velo-vert.jpg` ; **crédits photos au pied de page** (Wikimedia Commons / Flickr, CC BY-SA — toujours vérifier le **sujet réel** via l'API avant de télécharger, un ID deviné s'est révélé être une moto).
 - ⚠️ **Resync base du 25/09** : la base live avait été restaurée à un état du 23/09 (14h10) sans lat/lng ni colonnes mot-secret ni CGU. Elle a été **ré-alignée** : `ALTER` `reparateur` (lat/lng), `utilisateur` (`tentatives_secret`, `blocage_secret_jusqua`, `cgu_acceptee_at`, `cgu_version`), mots secrets Marc/Laura réinjectés (hash bcrypt), Thomas ajouté. Si la base est réimportée depuis `fairepair_bdd.sql` (schéma seul, zéro seed), tout est recréé via l'application + le bloc SQL ci-dessus (documenté dans la conversation).
 - **Tableau de bord + changement de profil (06/10)** : les pages privées ne sont plus rendues dans le gabarit `header` mais dans le layout **`sidebar`** (menu à gauche). `Controller::render()` a un 4ᵉ paramètre `$layout` ('header' | 'sidebar') ; `Views/layout/sidebar.php` (nouveau) affiche la carte profil, le menu **variable selon le profil actif** et le bouton « Changer de profil ». `Auth::roleActif()` / `setRoleActif()` mémorisent le profil choisi en session (`$_SESSION['role_actif']`, défaut réparateur > modérateur > client) ; routes `dashboard` (redirige vers l'espace du profil actif) et `basculerProfil&role=` (refusée si le rôle n'est pas possédé). Connexion → `dashboard`. `body[data-role]` + CSS : **3 thèmes** (client = bleu `#2563a8`, réparateur = vert `#2f8f5b`, modérateur = violet `#6d4aa8`) qui colorent sidebar, badge, titre actif et pastilles ; le site public reste vert. Testé : 3 profils × leurs pages (200), bascule client↔réparateur, refus d'un rôle non possédé, persistance en session, parcours « devenir réparateur » (bascule auto du profil).

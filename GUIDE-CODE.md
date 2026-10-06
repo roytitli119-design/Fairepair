@@ -372,7 +372,6 @@ Aucun modèle ne fait d'affichage.
 | `definirMotSecret($id, $secret)` | enregistre le mot secret **hashé** |
 | `verifierAncienMotSecret($id, $ancien)` | obligatoire pour changer le mot secret, **3 tentatives** max |
 | `reinitialiserParMotSecret($email, $secret, $nouveauMdp)` | récupération du mot de passe → `'ok' \| 'bloque' \| 'echec'` |
-| `trouverParToken($token)` / `majMotDePasseParToken()` | réinitialisation par lien (avec expiration) |
 | `majProfil($id, $data)` | prénom, nom, adresse, code postal, ville, téléphone |
 | `infosReparateur($id)` | ligne `reparateur` de l'utilisateur |
 | `devenirReparateur(...)` | crée le rôle réparateur (et l'entreprise + lat/lng) |
@@ -481,7 +480,7 @@ renseigné latitude/longitude → base de la carte Leaflet).
   vers son tableau de bord, sinon accueil).
 - `inscription()` : champs requis, email valide, **politique de mot de passe**, confirmation,
   **acceptation des CGU obligatoire**, email unique → création + redirection vers le mot secret.
-- `deconnexion()`, `motDePasseOublie()` (récupération par mot secret), `reinitialiserMotDePasse()`
+- `deconnexion()`, `motDePasseOublie()` (récupération **par mot secret** — le flux par lien token a été supprimé : code mort)
   (par token), `creerMotSecret()`.
 
 ### 7.2 `HomeController.php` (37 lignes)
