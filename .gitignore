@@ -1,0 +1,25 @@
+# ============================================================
+#  Fichiers à NE PAS envoyer dans Git
+# ============================================================
+
+# --- Système / éditeurs ---
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*~
+.idea/
+.vscode/
+
+# --- Photos envoyées par les réparateurs (contenu utilisateur) ---
+# On garde le dossier (grâce au .gitkeep) mais pas les images.
+code/public/assets/uploads/*
+!code/public/assets/uploads/.gitkeep
+
+# --- Logs et fichiers temporaires ---
+*.log
+*.tmp
+*.bak
+
+# --- Base de données exportée (on versionne le script .sql, pas la dump) ---
+*.sql.gz

@@ -1,0 +1,151 @@
+<mxfile host="app.diagrams.net" agent="claude">
+  <diagram name="Cas d&#39;utilisation - Fair&#39;repair" id="usecase-fairepair">
+    <mxGraphModel dx="1140" dy="728" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="sys" parent="1" style="rounded=0;whiteSpace=wrap;html=1;verticalAlign=top;align=center;fontStyle=1;fontSize=14;fillColor=none;strokeColor=#333333;" value="Système Fair&#39;repair" vertex="1">
+          <mxGeometry height="610" width="780" x="240" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="actor_client" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Client" vertex="1">
+          <mxGeometry height="80" width="40" x="350" y="710" as="geometry" />
+        </mxCell>
+        <mxCell id="actor_rep" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Réparateur" vertex="1">
+          <mxGeometry height="80" width="40" x="870" y="710" as="geometry" />
+        </mxCell>
+        <mxCell id="actor_admin" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fillColor=#dae8fc;strokeColor=#6c8ebf;" value="Administrateur" vertex="1">
+          <mxGeometry height="80" width="40" x="610" y="710" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_c1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" value="Créer un compte (client)" vertex="1">
+          <mxGeometry height="50" width="220" x="260" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e_uc_c1" edge="1" parent="1" source="actor_client" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#666666;" target="uc_c1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_c2" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" value="Consulter la liste des services" vertex="1">
+          <mxGeometry height="50" width="220" x="260" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="e_uc_c2" edge="1" parent="1" source="actor_client" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#666666;" target="uc_c2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_c3" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" value="Voir les réparateurs sur une carte" vertex="1">
+          <mxGeometry height="50" width="220" x="260" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="e_uc_c3" edge="1" parent="1" source="actor_client" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#666666;" target="uc_c3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_c4" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" value="Réserver un service" vertex="1">
+          <mxGeometry height="50" width="220" x="260" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="e_uc_c4" edge="1" parent="1" source="actor_client" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#666666;" target="uc_c4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_c5" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" value="Modifier / annuler une réservation" vertex="1">
+          <mxGeometry height="50" width="220" x="260" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="e_uc_c5" edge="1" parent="1" source="actor_client" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#666666;" target="uc_c5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_c6" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" value="Consulter l&#39;historique des réservations" vertex="1">
+          <mxGeometry height="50" width="220" x="260" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="e_uc_c6" edge="1" parent="1" source="actor_client" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#666666;" target="uc_c6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_c7" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" value="Payer un service" vertex="1">
+          <mxGeometry height="50" width="220" x="260" y="510" as="geometry" />
+        </mxCell>
+        <mxCell id="e_uc_c7" edge="1" parent="1" source="actor_client" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#666666;" target="uc_c7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_c8" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" value="Signaler un problème" vertex="1">
+          <mxGeometry height="50" width="220" x="260" y="580" as="geometry" />
+        </mxCell>
+        <mxCell id="e_uc_c8" edge="1" parent="1" source="actor_client" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#666666;" target="uc_c8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_com1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" value="Se connecter" vertex="1">
+          <mxGeometry height="50" width="220" x="520" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e_uc_com1_c" edge="1" parent="1" source="actor_client" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#666666;" target="uc_com1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_uc_com1_r" edge="1" parent="1" source="actor_rep" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#666666;" target="uc_com1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_com2" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=12;" value="Gérer son profil" vertex="1">
+          <mxGeometry height="50" width="220" x="520" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="e_uc_com2_c" edge="1" parent="1" source="actor_client" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#666666;" target="uc_com2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_uc_com2_r" edge="1" parent="1" source="actor_rep" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#666666;" target="uc_com2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_a1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;" value="Gérer les comptes utilisateurs" vertex="1">
+          <mxGeometry height="50" width="220" x="520" y="390" as="geometry" />
+        </mxCell>
+        <mxCell id="e_uc_a1" edge="1" parent="1" source="actor_admin" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#666666;" target="uc_a1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_a2" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;" value="Traiter les signalements" vertex="1">
+          <mxGeometry height="50" width="220" x="520" y="475" as="geometry" />
+        </mxCell>
+        <mxCell id="e_uc_a2" edge="1" parent="1" source="actor_admin" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#666666;" target="uc_a2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_a3" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=12;" value="Superviser les services publiés" vertex="1">
+          <mxGeometry height="50" width="220" x="520" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="e_uc_a3" edge="1" parent="1" source="actor_admin" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#666666;" target="uc_a3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e_admin_login" edge="1" parent="1" source="actor_admin" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#666666;" target="uc_com1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_r1" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" value="Créer un compte (réparateur)" vertex="1">
+          <mxGeometry height="50" width="220" x="780" y="90" as="geometry" />
+        </mxCell>
+        <mxCell id="e_uc_r1" edge="1" parent="1" source="actor_rep" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#666666;" target="uc_r1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_r2" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" value="Consulter les rendez-vous reçus" vertex="1">
+          <mxGeometry height="50" width="220" x="780" y="160" as="geometry" />
+        </mxCell>
+        <mxCell id="e_uc_r2" edge="1" parent="1" source="actor_rep" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#666666;" target="uc_r2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_r3" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" value="Confirmer / annuler un rendez-vous" vertex="1">
+          <mxGeometry height="50" width="220" x="780" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="e_uc_r3" edge="1" parent="1" source="actor_rep" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#666666;" target="uc_r3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_r4" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" value="Consulter l&#39;historique des rendez-vous" vertex="1">
+          <mxGeometry height="50" width="220" x="780" y="300" as="geometry" />
+        </mxCell>
+        <mxCell id="e_uc_r4" edge="1" parent="1" source="actor_rep" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#666666;" target="uc_r4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_r5" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" value="Ajouter un service" vertex="1">
+          <mxGeometry height="50" width="220" x="780" y="370" as="geometry" />
+        </mxCell>
+        <mxCell id="e_uc_r5" edge="1" parent="1" source="actor_rep" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#666666;" target="uc_r5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_r6" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" value="Modifier / supprimer un service" vertex="1">
+          <mxGeometry height="50" width="220" x="780" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="e_uc_r6" edge="1" parent="1" source="actor_rep" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#666666;" target="uc_r6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="uc_r7" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=12;" value="Consulter ses gains" vertex="1">
+          <mxGeometry height="50" width="220" x="780" y="510" as="geometry" />
+        </mxCell>
+        <mxCell id="e_uc_r7" edge="1" parent="1" source="actor_rep" style="edgeStyle=none;html=1;endArrow=none;startArrow=none;strokeColor=#666666;" target="uc_r7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
