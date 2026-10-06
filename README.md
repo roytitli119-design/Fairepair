@@ -274,7 +274,7 @@ Fair'repair/
 │   │   ├── Core/                ← Database, Router, Controller, Auth, helpers, StripeGateway
 │   │   ├── Models/              ← Utilisateur, Service, Reservation, Paiement, Avis,
 │   │   │                          Signalement, Reparateur, AuthRemember
-│   │   ├── Controllers/         ← 10 contrôleurs (Auth, Home, Page, Profil, Service,
+│   │   ├── Controllers/         ← 11 contrôleurs (Auth, Home, Page, Profil, Service,
 │   │   │                          Reservation, Paiement, Avis, Signalement, Reparateur,
 │   │   │                          Moderateur)
 │   │   └── Views/               ← gabarits HTML (layout/, home/, auth/, service/…)
