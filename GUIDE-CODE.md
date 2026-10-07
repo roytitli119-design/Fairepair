@@ -1,4 +1,4 @@
-# Fair'repair — Guide du code (explication détaillée)
+ Fair'repair — Guide du code (explication détaillée)
 
 > Document pédagogique : il explique **tout le code** de l'application, fichier par fichier,
 > pour comprendre ce qui a été écrit et savoir le présenter en soutenance.
@@ -393,6 +393,7 @@ public static function creerClient(string $prenom, string $nom, string $email, s
         $userId = (int)$pdo->lastInsertId();
         $pdo->prepare("INSERT INTO client (id_utilisateur) VALUES (?)")->execute([$userId]);
         $pdo->commit();
+        
         return $userId;
     } catch (\Throwable $e) {
         $pdo->rollBack();                           // on annule tout

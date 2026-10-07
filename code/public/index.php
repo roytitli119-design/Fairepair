@@ -17,6 +17,7 @@ use App\Controllers\AvisController;
 use App\Controllers\SignalementController;
 use App\Controllers\ReparateurController;
 use App\Controllers\ModerateurController;
+use App\Controllers\DevisController;
 
 $routeur = new Router();
 
@@ -50,6 +51,10 @@ $routeur->add('paiement',                PaiementController::class,    'index');
 $routeur->add('paiementValidation',      PaiementController::class,    'validation');
 $routeur->add('avis',                    AvisController::class,        'index');
 $routeur->add('signalement',             SignalementController::class, 'index');
+
+// ---- Devis (réparateur propose, client accepte ou refuse) ----
+$routeur->add('devis',                   DevisController::class,      'nouveau');
+$routeur->add('devisRepondre',           DevisController::class,      'repondre');
 
 // ---- Réparateur ----
 $routeur->add('reparateurAccueil',       ReparateurController::class,  'accueil');

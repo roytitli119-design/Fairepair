@@ -37,7 +37,7 @@ final class Avis
     }
 
     // Avis déjà modérés (espace modérateur)
-    public static function moderes(): array
+    public static function moderes(): array 
     {
         return Database::get()->query(
             "SELECT a.id, a.note, a.commentaire, a.date_avis,

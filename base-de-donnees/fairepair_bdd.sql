@@ -185,6 +185,37 @@ CREATE TABLE signalement (
     
 ) ENGINE=InnoDB;
 
+-- ======================================================================
+-- Table SIGNALEMENT
+-- Porte sur une réservation, fait par un client,
+-- peut être traité par un modérateur (id_moderateur NULL = non traité)
+-- =========================================================
+CREATE TABLE signalement (
+    id               INT AUTO_INCREMENT PRIMARY KEY,
+    motif            VARCHAR(100) NOT NULL,
+    description      TEXT         NOT NULL,
+    statut           ENUM('ouvert', 'en_cours', 'resolu', 'rejete')
+                     NOT NULL DEFAULT 'ouvert',
+    date_signalement DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    reservation_id   INT NOT NULL,
+    client_id        INT NOT NULL, -- celui qui signale
+    moderateur_id    INT NULL,     -- NULL tant que le signalement n'a pas été traité
+
+    CONSTRAINT fk_signalement_reservation
+        FOREIGN KEY (reservation_id) REFERENCES reservation(id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_signalement_client
+        FOREIGN KEY (client_id) REFERENCES client(id_utilisateur)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_signalement_moderateur
+        FOREIGN KEY (moderateur_id) REFERENCES moderateur(id_utilisateur)
+        ON DELETE SET NULL
+
+    
+) ENGINE=InnoDB;
+
 -- =========================================================
 -- Table AUTH_REMEMBER (« se souvenir de moi »)
 -- Une ligne = un appareil connecté. On ne stocke QUE
@@ -202,3 +233,20 @@ CREATE TABLE auth_remember (
         FOREIGN KEY (user_id) REFERENCES utilisateur(id) ON DELETE CASCADE,
     INDEX idx_auth_remember_expires (expires_at)
 ) ENGINE=InnoDB;
+
+-- Tables devis
+CREATE Table devis (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    reservation_id INT NOT NULL UNIQUE,
+    description_intervation TEXT NOT NULL,
+    montant DECIMAL(6,2) NOT NULL,
+    statut ENUM('en_attente', 'accepte', 'refuse') NOT NULL DEFAULT 'en_attente',
+    date_creation DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    main_oeuvre DECIMAL(6,2) NOT NULL,
+    cout_materiel DECIMAL(6,2) NOT NULL,
+    delai_reparation INT NOT NULL, -- en heures, jours
+    remarques_facultatives TEXT NULL,
+    CONSTRAINT fk_devis_reservation
+        FOREIGN KEY (reservation_id) REFERENCES reservation(id)
+        ON DELETE CASCADE
+)

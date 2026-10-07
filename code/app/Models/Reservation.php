@@ -71,6 +71,23 @@ final class Reservation
         return $stmt->fetch() ?: null;
     }
 
+    // Charge une réservation SEULEMENT si elle porte sur un service
+    // du réparateur donné (garde-fou : utilisé pour créer un devis).
+    // Même principe que Service::appartenantA().
+    public static function appartenantA(int $id, int $reparateurId): ?array
+    {
+        $stmt = Database::get()->prepare(
+            "SELECT r.*, s.titre AS service_titre, s.tarif,
+                    u.prenom AS client_prenom, u.nom AS client_nom, u.telephone AS client_tel
+             FROM reservation r
+             INNER JOIN service s ON s.id = r.service_id AND s.reparateur_id = ?
+             INNER JOIN utilisateur u ON u.id = r.client_id
+             WHERE r.id = ?"
+        );
+        $stmt->execute([$reparateurId, $id]);
+        return $stmt->fetch() ?: null;
+    }
+
     // Réservation permettant de signaler un problème (à soi)
     public static function pouvoirSignalement(int $id, int $clientId): ?array
     {
