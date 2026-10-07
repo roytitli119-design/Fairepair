@@ -6,6 +6,19 @@
 
 ## Organisation des fichiers (refonte MVC le 23/09/2026)
 
+> ⚠️ **DEUX DOSSIERS à distinguer depuis le 07/10/2026** (pour ne pas mélanger la version à
+> rendre et le code en cours de développement) :
+>
+> | Dossier | Rôle |
+> |---|---|
+> | `~/Documents/Fair'repair` | **dossier de TRAVAIL** : dépôt Git (`main`), modifications en cours (feature devis…). C'est celui qu'on édite et qu'on commite. |
+> | `~/Documents/Fair'repair-rendu` | **copie propre à RENDRE** : snapshot figée, **sans `.git`**, générée par `git archive`. Ne jamais y écrire. |
+>
+> La copie rendue correspond pour l'instant au commit `bdf2883` (« suppression d'un contrôleur
+> orphelin ») = version complète **sans** la feature devis. Pour la rafraîchir quand la feature
+> devis sera terminée : `./creer-version-rendue.sh HEAD` (committer d'abord !).
+> Pour la tester : `cd ~/Documents/Fair'repair-rendu/code && php -S 127.0.0.1:8001 -t public`.
+
 ```
 Fair'repair/
 ├── docs/                      ← conception : Cahier_des_charges_Fairepair.docx, Fairepair.pdf, usecase_fairepair.drawio
